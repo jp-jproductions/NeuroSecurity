@@ -36,6 +36,7 @@ import { AdminUserModal } from './components/AdminUserModal';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { NeuromedicaLogo } from './components/NeuromedicaLogo';
 import { formatBogotaDate, formatBogotaTimeOnly } from './utils/date';
+import { useRealtimeSecurityUpdates } from './lib/realtime';
 
 export default function App() {
   // Main Navigation Tab
@@ -115,6 +116,8 @@ export default function App() {
 
     return () => clearInterval(interval);
   }, [fetchData]);
+
+  useRealtimeSecurityUpdates(() => fetchData(false));
 
   // Check URL hash or path for direct /admin route
   useEffect(() => {
