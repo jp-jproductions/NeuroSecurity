@@ -43,6 +43,14 @@ El logo está configurado para cargarse desde:
 
 ---
 
+## 📱 Añadir la aplicación a la pantalla de inicio
+
+La aplicación incluye un manifiesto y sus iconos para instalarla desde un navegador compatible. En iPhone o iPad, abre el sitio en Safari, toca **Compartir** y selecciona **Añadir a pantalla de inicio**. En Android, abre el sitio en Chrome y selecciona **Instalar aplicación** o **Añadir a pantalla de inicio** desde el menú del navegador.
+
+La instalación requiere abrir el sitio publicado con HTTPS. La aplicación necesita conexión a internet para consultar el estado actualizado de las sedes.
+
+---
+
 ## 🔐 Credenciales del Administrador
 
 Por defecto, el sistema viene preconfigurado con:
