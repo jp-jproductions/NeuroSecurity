@@ -415,8 +415,8 @@
       "estado_camaras": "operativo",
       "estado_alarma": "operativo",
       "nota": "",
-      "fecha_revision": "2026-10-26T03:18:54.503Z",
-      "actualizado_en": "2026-10-26T03:18:54.503Z",
+      "fecha_revision": "2026-10-26T03:47:13.540Z",
+      "actualizado_en": "2026-10-26T03:47:13.540Z",
       "actualizado_por": "Administrador de Seguridad"
     },
     "sede-2": {
@@ -872,6 +872,20 @@
   },
   "historial": [
     {
+      "id": "hist-1792986433603-on12l",
+      "sede_id": "sede-1",
+      "sede_nombre": "CEDI",
+      "fecha": "2026-10-26T03:47:13.540Z",
+      "usuario": "Administrador de Seguridad",
+      "estado_camaras_anterior": "operativo",
+      "estado_camaras_nuevo": "operativo",
+      "estado_alarma_anterior": "operativo",
+      "estado_alarma_nuevo": "operativo",
+      "nota_anterior": "",
+      "nota_nueva": "",
+      "tipo_evento": "actualizacion"
+    },
+    {
       "id": "hist-init",
       "sede_id": "todas",
       "sede_nombre": "Todas las Sedes",
@@ -905,7 +919,7 @@
       "id": "admin-pablo",
       "email": "pablo.escobar@neuromedica.com.co",
       "nombre": "Pablo Escobar",
-      "passwordHash": "cc740782e0818b3b8d3be5d66a4106d8dc1c626ee6e177067d32964bd5e9282c05d463214ffcba9a346c6e0b7f6ff2d95aeb90375d09d1ea04fba5041c72fd4d",
+      "password_hash": "cc740782e0818b3b8d3be5d66a4106d8dc1c626ee6e177067d32964bd5e9282c05d463214ffcba9a346c6e0b7f6ff2d95aeb90375d09d1ea04fba5041c72fd4d",
       "rol": "superadmin",
       "creado_en": "2026-10-26T01:15:29.656Z"
     },
@@ -913,7 +927,15 @@
       "id": "admin-1",
       "email": "admin@neuromedica.com",
       "nombre": "Administrador de Seguridad",
-      "passwordHash": "edf53735a0382444ed6df3677bac7b461e98aac44594056767cf52440a5b98985d643319b8dd15c0c38a2732f6cd1c4d3dc63aa023e966cc6bc521efac723d47",
+      "password_hash": "edf53735a0382444ed6df3677bac7b461e98aac44594056767cf52440a5b98985d643319b8dd15c0c38a2732f6cd1c4d3dc63aa023e966cc6bc521efac723d47",
+      "rol": "superadmin",
+      "creado_en": "2026-10-26T01:15:29.656Z"
+    },
+    {
+      "id": "admin-jupaesra",
+      "email": "jupaesra170504@gmail.com",
+      "nombre": "Superadministrador",
+      "password_hash": "edf53735a0382444ed6df3677bac7b461e98aac44594056767cf52440a5b98985d643319b8dd15c0c38a2732f6cd1c4d3dc63aa023e966cc6bc521efac723d47",
       "rol": "superadmin",
       "creado_en": "2026-10-26T01:15:29.656Z"
     }

@@ -45,15 +45,21 @@ export interface UsuarioRow {
   creado_en: string;
 }
 
+export function isSupabaseConfigured(): boolean {
+  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY;
+  return Boolean(url && key);
+}
+
 let client: SupabaseClient | null = null;
 
 // Server-only client: the service role key bypasses RLS, so it must never reach the browser.
-export function getSupabase(): SupabaseClient {
+export function getSupabase(): SupabaseClient | null {
   if (client) return client;
   const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY;
   if (!url || !key) {
-    throw new Error('Faltan las variables SUPABASE_URL y SUPABASE_SERVICE_ROLE_KEY.');
+    return null;
   }
   client = createClient(url, key, {
     auth: { persistSession: false, autoRefreshToken: false },
@@ -65,3 +71,4 @@ export function check<T>(result: { data: T; error: { message: string } | null })
   if (result.error) throw new Error(result.error.message);
   return result.data;
 }
+
