@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import fs from 'fs';
+import http from 'http';
 import path from 'path';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
@@ -1000,14 +1001,17 @@ app.post('/api/admin/reset-defaults', authMiddleware, (req: Request, res: Respon
 // Serve frontend in Dev with Vite middleware or Production with static files
 async function startServer() {
   const isProd = process.env.NODE_ENV === 'production';
+  const httpServer = http.createServer(app);
 
   if (!isProd) {
     const { createServer: createViteServer } = await import('vite');
+    const hmrDisabled = process.env.DISABLE_HMR === 'true';
     const vite = await createViteServer({
       server: {
         middlewareMode: true,
-        host: '0.0.0.0',
-        port: Number(PORT),
+        // Share the Express HTTP server for the HMR WebSocket so it works behind
+        // proxies that only expose the app port (instead of Vite's default 24678).
+        ws: hmrDisabled ? false : { server: httpServer },
       },
       appType: 'spa',
     });
@@ -1020,7 +1024,7 @@ async function startServer() {
     });
   }
 
-  app.listen(Number(PORT), '0.0.0.0', () => {
+  httpServer.listen(Number(PORT), '0.0.0.0', () => {
     console.log(`🚀 Servidor Neuromédica iniciado en http://0.0.0.0:${PORT}`);
   });
 }
