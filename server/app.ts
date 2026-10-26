@@ -611,7 +611,15 @@ router.post(
 
 // Create the Express App
 const app = express();
-app.use(express.json());
+
+// Safe body parsing: When deployed on Vercel, the runtime may already parse req.body as an object.
+// Calling express.json() on an already consumed stream causes a hang or unhandled 500 error.
+app.use((req: any, res: Response, next: NextFunction) => {
+  if (req.body && typeof req.body === 'object') {
+    return next();
+  }
+  express.json()(req, res, next);
+});
 
 // CORS & Preflight handling
 app.use((req, res, next) => {
@@ -629,10 +637,17 @@ app.use((req, res, next) => {
 app.use('/api', router);
 app.use(router);
 
+// JSON 404 handler for API routes
+app.use('/api', (req: Request, res: Response) => {
+  res.status(404).json({ error: `Ruta no encontrada: ${req.method} ${req.originalUrl || req.url}` });
+});
+
 // JSON error handler for API
-app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-  console.error('Error procesando solicitud:', err.message);
-  res.status(500).json({ error: err.message || 'Error en el servidor. Intente nuevamente.' });
+app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+  console.error('Error procesando solicitud API:', err?.message || err);
+  const status = typeof err?.status === 'number' ? err.status : 500;
+  const message = err?.message || (typeof err === 'string' ? err : 'Error en el servidor. Intente nuevamente.');
+  res.status(status).json({ error: message });
 });
 
 export default app;

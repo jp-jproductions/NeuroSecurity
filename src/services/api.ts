@@ -41,7 +41,15 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
     headers,
   });
 
-  const data = await response.json().catch(() => ({}));
+  const text = await response.text();
+  let data: any = {};
+  try {
+    data = JSON.parse(text);
+  } catch {
+    if (text && text.length < 150 && !text.includes('<!DOCTYPE') && !text.includes('<html')) {
+      data = { error: text.trim() };
+    }
+  }
 
   if (!response.ok) {
     throw new Error(data.error || `Error en la solicitud (${response.status})`);
