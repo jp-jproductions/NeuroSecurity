@@ -10,8 +10,8 @@ import {
   EstadoRow,
   HistorialRow,
   UsuarioRow,
-} from './supabase';
-import { INITIAL_SEDES_DATA } from './sedes-iniciales';
+} from './supabase.js';
+import { INITIAL_SEDES_DATA } from './sedes-iniciales.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

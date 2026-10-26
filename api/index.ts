@@ -1,4 +1,4 @@
-import app from '../server/app';
+import app from '../server/app.js';
 
 export default async function handler(req: any, res: any) {
   // If Vercel rewrote the URL, recover the real path from x-matched-path or x-forwarded-uri

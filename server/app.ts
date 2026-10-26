@@ -4,8 +4,8 @@ import dotenv from 'dotenv';
 import {
   storage,
   hashPassword,
-} from './storage';
-import { SedeRow, EstadoRow, HistorialRow, EstadoSistema } from './supabase';
+} from './storage.js';
+import { SedeRow, EstadoRow, HistorialRow, EstadoSistema } from './supabase.js';
 
 dotenv.config({ path: ['.env.development.local', '.env.local', '.env'], quiet: true });
 
