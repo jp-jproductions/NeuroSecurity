@@ -19,6 +19,7 @@ import {
   Lock,
   LogOut,
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { SedeConEstado, ResumenEstadisticas, AdminUser, SystemStatus, RegistroHistorial } from './types';
 import { api, getStoredUser, clearStoredSession } from './services/api';
 import { Sidebar, NavTab } from './components/Sidebar';
@@ -554,7 +555,7 @@ export default function App() {
                       onClick={() => setViewMode('grid')}
                       className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                         viewMode === 'grid'
-                          ? 'bg-[#00a6e4] text-white shadow-xs'
+                          ? 'bg-[#5B7CFA] text-white shadow-xs'
                           : 'text-slate-400 hover:text-slate-600'
                       }`}
                       title="Vista tarjetas"
@@ -566,7 +567,7 @@ export default function App() {
                       onClick={() => setViewMode('table')}
                       className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                         viewMode === 'table'
-                          ? 'bg-[#00a6e4] text-white shadow-xs'
+                          ? 'bg-[#5B7CFA] text-white shadow-xs'
                           : 'text-slate-400 hover:text-slate-600'
                       }`}
                       title="Vista tabla"
@@ -581,7 +582,7 @@ export default function App() {
 
           {/* Search and Filters Toolbar */}
           {['resumen', 'sedes', 'novedades'].includes(currentTab) && (
-            <div className="dashboard-card p-4 space-y-3 bg-white border border-slate-200">
+            <div className="dashboard-card p-4 space-y-3 bg-white border border-[#E7EBF5] rounded-3xl shadow-[0_4px_20px_-4px_rgba(91,124,250,0.04)]">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-center">
                 {/* Search Input */}
                 <div className="lg:col-span-5 relative">
@@ -591,7 +592,7 @@ export default function App() {
                     placeholder="Buscar por sede, grupo o novedad..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-9 pr-8 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-white text-[#1a1a37] focus:outline-hidden focus:ring-2 focus:ring-[#00a6e4]"
+                    className="w-full pl-9 pr-8 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-white text-[#1a1a37] focus:outline-hidden focus:ring-2 focus:ring-[#5B7CFA]"
                   />
                   {searchTerm && (
                     <button
@@ -604,12 +605,12 @@ export default function App() {
                   )}
                 </div>
 
-                {/* Group Filter */}
+                {/* Group Selector */}
                 <div className="lg:col-span-4">
                   <select
                     value={selectedGroup}
                     onChange={(e) => setSelectedGroup(e.target.value)}
-                    className="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-white text-[#1a1a37] focus:outline-hidden focus:ring-2 focus:ring-[#00a6e4] font-medium"
+                    className="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-white text-[#1a1a37] focus:outline-hidden focus:ring-2 focus:ring-[#5B7CFA] font-medium"
                   >
                     {groupsList.map((g) => (
                       <option key={g} value={g}>
@@ -624,7 +625,7 @@ export default function App() {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as any)}
-                    className="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-white text-[#1a1a37] focus:outline-hidden focus:ring-2 focus:ring-[#00a6e4] font-medium"
+                    className="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-white text-[#1a1a37] focus:outline-hidden focus:ring-2 focus:ring-[#5B7CFA] font-medium"
                   >
                     <option value="prioridad">⚠️ Atención prioritaria</option>
                     <option value="alfabetico">🔤 Orden Alfabético (A - Z)</option>
@@ -642,18 +643,19 @@ export default function App() {
                   { id: 'novedad', label: '🟡 Con Novedad' },
                   { id: 'desactivadas', label: '🔴 Desactivadas' },
                 ].map((btn) => (
-                  <button
+                  <motion.button
                     key={btn.id}
                     type="button"
+                    whileTap={{ scale: 0.96 }}
                     onClick={() => setStatusFilter(btn.id)}
                     className={`px-3 py-1 rounded-full font-semibold transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                       statusFilter === btn.id
-                        ? 'bg-[#00a6e4] text-white shadow-2xs'
+                        ? 'bg-[#5B7CFA] text-white shadow-2xs'
                         : 'bg-[#1a1a37]/5 text-[#1a1a37] hover:bg-[#1a1a37]/10'
                     }`}
                   >
                     {btn.label}
-                  </button>
+                  </motion.button>
                 ))}
 
                 {(statusFilter !== 'todas' || selectedGroup !== 'TODOS' || searchTerm) && (
@@ -664,7 +666,7 @@ export default function App() {
                       setSelectedGroup('TODOS');
                       setSearchTerm('');
                     }}
-                    className="text-xs text-[#00a6e4] hover:underline ml-auto font-medium cursor-pointer shrink-0 whitespace-nowrap"
+                    className="text-xs text-[#5B7CFA] hover:underline ml-auto font-medium cursor-pointer shrink-0 whitespace-nowrap"
                   >
                     Limpiar
                   </button>
@@ -684,7 +686,7 @@ export default function App() {
                 </div>
               ) : filteredAndSortedSedes.length > 0 ? (
                 viewMode === 'grid' ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {filteredAndSortedSedes.map((sede) => (
                       <SedeCard
                         key={sede.id}
@@ -695,7 +697,7 @@ export default function App() {
                         onMarkOperational={handleMarkOperational}
                       />
                     ))}
-                  </div>
+                  </motion.div>
                 ) : (
                   <SedeTableView
                     sedes={filteredAndSortedSedes}
